@@ -1,0 +1,50 @@
+<!-- <ion-list>
+  <h1> Bienvenido a la Carga de tu Celular, inicia sesion para comenzar, si no tenes cuenta, hace click en Registrarse</h1>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
+    </ion-item>
+  
+  </ion-list>
+  
+  <div padding>
+    <button ion-button full  (click)="login()">Login</button>
+    <button ion-button color="light" (click)="UserValido()">UseValid</button>
+    <button ion-button color ="light"  (click)="Registrarse()">Registrarse</button>
+ 
+  </div> -->
+
+  <p class="texto">Visualizador​ ​kinético</p>
+  <div class="Registro">
+  <form method="post" action="https://getform.org/f/70415a77-d632-4883-bf07-2e15d3f557da">
+  
+<span class="fontawesome-envelope-alt"></span>
+<input type="text" [(ngModel)]="username" name="user" id="email" required placeholder="Correo" >
+<span class="fontawesome-lock"></span>
+<input type="password" [(ngModel)]="password"  name="password" id="password" required placeholder="Contraseña"> 
+
+
+
+
+    <ion-list>
+      <ion-item class="miselect">
+        <ion-label>Seleccione un Usuario...</ion-label>
+        <ion-select  class="MiSelect" name="firstField" [(ngModel)]="tipoUser" (ionChange)="UserValido()">
+          <ion-option value="usuario">Usuario</ion-option>
+          <ion-option value="admin">Administrador</ion-option>
+          <ion-option value="invitado">Invitado</ion-option>
+          <ion-option value="jugador1">Jugador 1</ion-option>
+          <ion-option value="jugador2">Jugador 2</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <input type="submit" (click)="login()" value="Entrar" title="Registra tu cuenta">
+    <br>
+    <input type="submit" (click)="Registrarse()" value="Registrar" title="Registra tu cuenta">
+  
