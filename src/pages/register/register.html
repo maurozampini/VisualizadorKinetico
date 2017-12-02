@@ -1,34 +1,22 @@
-<!-- <ion-list>
-  
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input [(ngModel)]="username" type="text" aria-placeholder="Ingrese su User" value=""></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="password" aria-placeholder="ingrese su Password"  type="password" value=""></ion-input>
-    </ion-item>
-  
-  </ion-list>
-  <div padding>
-  <button ion-button full  (click)="Aceptar()">Aceptar</button>
-  <button ion-button full  (click)="Cancelar()">Cancelar</button>
-  </div> -->
-
-
-
-  <p class="texto">Regitrarme</p>
-  <div class="Registro">
-  <form method="post" action="https://getform.org/f/70415a77-d632-4883-bf07-2e15d3f557da">
-  
-<span class="fontawesome-envelope-alt"></span>
-<input type="text" [(ngModel)]="username" name="user" id="email" required placeholder="Correo" >
-<span class="fontawesome-lock"></span>
-<input type="password" [(ngModel)]="password"  name="password" id="password" required placeholder="Contraseña"> 
-<span class="fontawesome-lock"></span>
-<input type="password" [(ngModel)]="passwordconfirm"  name="password1" id="1" required placeholder="Confirme contraseña"> 
-
-<input type="submit" (click)="Aceptar()" value="Aceptar" title="Registra tu cuenta">
-<br>
-<input type="submit" (click)="Cancelar()" value="Cancelar" title="Registra tu cuenta">
+<ion-header>
+  <ion-navbar>
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>Email</ion-label>
+    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  </ion-item> 
+  <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Repetir contraseña</ion-label>
+    <ion-input type="password" [(ngModel)]="passRepetida"></ion-input>
+</ion-item>
+  <div padding text-center>
+    <button ion-button round (click)="register(user)">Registrarse</button> 
+  </div>
+</ion-content>

@@ -7,6 +7,9 @@ import { Firebase }  from 'firebase/database';
 import { TabsPage } from '../tabs/tabs';
 import { LoginPage } from '../login/login';
 import { AlertController, LoadingController ,Loading} from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { Vibration } from '@ionic-native/vibration';
+import { User } from '../../models/user';
 
 
 @IonicPage()
@@ -20,90 +23,156 @@ export class RegisterPage {
   Mensaje:string;
   passwordconfirm:string;
   
+  user = {} as User;
+  passRepetida: string;
+  public loading: Loading;
 
-  constructor(public spiner:LoadingController,
-              public navCtrl: NavController,
-               public alertCtrl: AlertController,
-               public navParams: NavParams,
-               private _auth:AngularFireAuth) {
-  }
+  constructor(private authAf: AngularFireAuth,
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private alertCtrl: AlertController,
+    private vibration: Vibration,
+    private toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
+ }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
-  }
-  async Aceptar()
-  {
-    
-    if(this.password.length>5){
-    if(this.password==this.passwordconfirm)
-    try{
-         this.MiSpiner();
-        const result = await this._auth.auth.createUserWithEmailAndPassword(this.username,this.password);
-    
-        this.Mensaje=this.username + " Fue ingresado Exitosamente!"
-        let alert = this.alertCtrl.create({
-          title: "Mensaje",
-          subTitle: this.Mensaje,
-          buttons: ['OK']
-        });
-        alert.present();
-        this.navCtrl.push(LoginPage);
-      }
-      catch(e)
-      {
-        console.error(e);
-        this.showAlert(e, "Error al registrarse");
-      }
-      else
-        {
-          this.showAlert("Las claves no coinciden, intente nuevamente.", "Error al registrarse")
-        }
-    }
-    else
-    {
-
-      this.showAlert("La clave debe contener por lo menos 6 caracteres.","Error al registrarse")
-    }
-
-  }
-  showAlert(mensaje:string, titulo:string) {
-
-    switch(mensaje)
-    {
-      case "reateUserWithEmailAndPassword failed: First argument email must be a valid string":
-      {
-        mensaje="El email no contiene un formato correcto";
-        break;
-      }
-      case "The email address is badly formatted.":
-      {
-        mensaje="El email no contiene un formato correcto";
-        break;
-      }
-    }
-    let alert = this.alertCtrl.create({
-      title: titulo,
-      subTitle: mensaje,
-      buttons: ['OK']
+async register(user: User){
+ try {
+   if(user.password == "" || user.email == "" || this.passRepetida == ""){
+    this.vibration.vibrate(500);
+    let toast = this.toastCtrl.create({
+      message: 'Complete todos los campos',
+      duration: 1500,
+      showCloseButton: true,
+      closeButtonText: 'Cerrar',
+      position: 'bottom',
+      cssClass: "ToastWarning",
+      dismissOnPageChange: true,
     });
-    alert.present();
-  }  
-
-  MiSpiner()
-  {
-    let loader = this.spiner.create({
-      content:"Espere..",
-      duration: 2500
-      
+    toast.present();
+   }
+   if(this.passRepetida != user.password){
+    this.vibration.vibrate(500);
+    let toast = this.toastCtrl.create({
+      message: 'Las contraseñas no coinciden',
+      duration: 1500,
+      showCloseButton: true,
+      closeButtonText: 'Cerrar',
+      position: 'top',
+      cssClass: "ToastWarning",
+      dismissOnPageChange: true,
     });
-      loader.present();
-    
-  }
+    toast.present();
+   }
+   else{
+       const result = await this.authAf.auth.createUserWithEmailAndPassword(user.email, user.password);
+       if (result != null) {
+         this.registroExitoso();
+         this.loading = this.loadingCtrl.create({
+           //spinner: 'hide',
+           content: '<ion-spinner name="bubbles">Cargando...</ion-spinner>',
+           duration: 3000,
+           dismissOnPageChange: true,
+         });
+         this.loading.present();
+         this.navCtrl.setRoot(LoginPage);
+       }
+     }
+ } catch (error) {
+   console.error(error);
+   if (error.code == "auth/argument-error") {
+     this.camposIncompletosError();
+     this.vibration.vibrate(500);
+   }
+   if (error.code == "auth/invalid-email") {
+     this.usuarioInvalidoError();
+   }
+   if (error.code == "auth/weak-password") {
+     this.contraseñaInvalidaError();
+     this.vibration.vibrate(500);
+   }
+   if (error.code == "auth/email-already-in-use") {
+     this.usuarioRepetidoError();
+     this.vibration.vibrate(500);
+   }
+ }
+}
 
 
-  async Cancelar()
-  {
-    this.navCtrl.push(LoginPage);
-  }
+camposIncompletosError() {
+ this.vibration.vibrate(500);
+ let toast = this.toastCtrl.create({
+   message: 'Por favor, complete todos los campos',
+   duration: 1500,
+   showCloseButton: true,
+   closeButtonText: 'Cerrar',
+   position: 'bottom',
+   cssClass: "ToastWarning",
+   dismissOnPageChange: true,
+
+ });
+ toast.present();
+}
+
+usuarioInvalidoError() {
+  this.vibration.vibrate(500);
+    let toast = this.toastCtrl.create({
+      message: 'Usuario inválido. Por favor, ingrese un usuario válido',
+      duration: 1500,
+      cssClass: "ToastWarning",
+      showCloseButton: true,
+      closeButtonText: "Cerrar",
+      dismissOnPageChange: true,
+      position: 'middle'
+  });
+  toast.present();
+ }
+
+contraseñaInvalidaError() {
+ this.vibration.vibrate(500);
+   let toast = this.toastCtrl.create({
+     message: 'La contraseña debe tener al menos 6 caracteres',
+     duration: 1500,
+     cssClass: "ToastWarning",
+     showCloseButton: true,
+     closeButtonText: "Cerrar",
+     dismissOnPageChange: true,
+     position: 'middle'
+ });
+ toast.present();
+}
+
+usuarioRepetidoError() {
+ this.vibration.vibrate(500);
+   let toast = this.toastCtrl.create({
+   message: 'El usuario que desea ingresar ya existe',
+   duration: 1500,
+   cssClass: "ToastWarning",
+   showCloseButton: true,
+   closeButtonText: "Cerrar",
+   dismissOnPageChange: true,
+   position: 'top'    
+ });
+ toast.present();
+}
+
+registroExitoso() {
+ let toast = this.toastCtrl.create({
+   message: 'Su cuenta ha sido creada exitosamente',
+   duration: 1500,
+   position: 'top',
+   cssClass: "ToastAssert",
+   showCloseButton: true,
+   closeButtonText: "Cerrar",
+   //dismissOnPageChange: true
+ });
+
+ toast.onDidDismiss(() => {
+   console.log('Dismissed toast');
+ });
+
+ toast.present();
+}
+
 
 }

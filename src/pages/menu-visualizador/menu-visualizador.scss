@@ -171,3 +171,32 @@ page-menu-visualizador {
         
     }
 }
+
+.botonF6{
+    width:60px;
+    height:60px;
+    border-radius:100%;
+    background:#F44336;
+    left:0;
+    bottom:0;
+    position:absolute;
+    margin-left:16px;
+    margin-bottom:16px;
+    border:none;
+    outline:none;
+    color:#FFF;
+    font-size:36px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition:.5s;  
+  }
+  .botonF6:active{
+    transform:scale(1.1);  
+  }
+  .ToastWarning{
+    > div{
+      background-color:#FF0015!important;
+      text-align: center;
+  }
+  }
+  
+  

@@ -1,1 +1,1 @@
-# AppVota
+# AppVisualizadorKinetico

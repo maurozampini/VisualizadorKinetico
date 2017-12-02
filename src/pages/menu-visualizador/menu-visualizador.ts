@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FotosPage } from '../fotos/fotos';
-
+import { AlertController ,LoadingController, Loading} from 'ionic-angular';
+import { AngularFireAuthModule,AngularFireAuth, } from 'angularfire2/auth';
+import { LoginPage } from '../../pages/login/login';
 
 @IonicPage()
 @Component({
@@ -10,8 +12,13 @@ import { FotosPage } from '../fotos/fotos';
 })
 export class MenuVisualizadorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private authAf: AngularFireAuth,
+              public alertCtrl: AlertController) 
+              {
+                
+              }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuVisualizadorPage');
@@ -32,6 +39,29 @@ export class MenuVisualizadorPage {
     this.navCtrl.push(FotosPage,{tipo:"Mascotas"});
   }
 
- 
+  confirmarCerrarSesion() {
+    let alert = this.alertCtrl.create({
+      title: 'Cerrar sesión',
+      message: '¿Desea cerrar la sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelar clickeado');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            console.log('Confirmar clickeado');
+            this.authAf.auth.signOut();
+            this.navCtrl.setRoot(LoginPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
 }

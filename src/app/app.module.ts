@@ -30,12 +30,12 @@ import { NativeAudio } from '@ionic-native/native-audio';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBMcF2w07cGdaP0pO29oE8fX5CgaKuYm7s",
-  authDomain: "appvisualizador.firebaseapp.com",
-  databaseURL: "https://appvisualizador.firebaseio.com",
-  projectId: "appvisualizador",
-  storageBucket: "appvisualizador.appspot.com",
-  messagingSenderId: "738835581280"
+  apiKey: "AIzaSyCw1-7R4zHCGRNzhbjHJnSY0gxPxjOR62M",
+  authDomain: "visualizadorkinetico-ff26b.firebaseapp.com",
+  databaseURL: "https://visualizadorkinetico-ff26b.firebaseio.com",
+  projectId: "visualizadorkinetico-ff26b",
+  storageBucket: "visualizadorkinetico-ff26b.appspot.com",
+  messagingSenderId: "265228455255"
 };
   
 
@@ -47,7 +47,7 @@ export const firebaseConfig = {
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage,
+    //RegisterPage,
     FotosPage,
     MenuVotaPage,
     MenuVisualizadorPage
@@ -70,7 +70,7 @@ export const firebaseConfig = {
     TabsPage,
     FotosPage,
     LoginPage,
-    RegisterPage,
+    //RegisterPage,
     MenuVotaPage,
     MenuVisualizadorPage
   ],

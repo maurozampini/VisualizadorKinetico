@@ -21,7 +21,7 @@ export class FotosPage {
 	y=0;
   z=0;
   tipo:string;
-  contador: number;
+  contador: number = 0;
   public myPhotoURL: any;
   data: any;
   subscription: any;
@@ -42,9 +42,10 @@ export class FotosPage {
 
   presentToast() {
     const toast = this.toastCtrl.create({
-      message: 'Inicio del album',
+      message: 'Primer foto',
       duration: 3000,
-      position: 'top'
+      position: 'top',
+      cssClass: "ToastAviso"
     });
   
     toast.onDidDismiss(() => {
@@ -76,12 +77,12 @@ export class FotosPage {
   goWaves(){
     var options = { frequency: 1000 };
 		let subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration) => {
-    
+      
 			this.x = acceleration.x;
 			this.y = acceleration.y;
       this.z = acceleration.z;
       
-      if(this.x > 6)
+      if(this.x > 3)
       {
         switch (this.tipo) {
             case "Vacaciones":
@@ -97,8 +98,27 @@ export class FotosPage {
           default:
             break;
         }
-        
       }
+
+      if(this.x < -3)
+      {
+        switch (this.tipo) {
+            case "Vacaciones":
+            this.MostarVacacionesVolver();
+            break;
+            case "Autos":
+            this.MostarAutosVolver();
+            break;
+            case "Mascotas":
+            this.MostarMascotasVolver();
+            break;
+        
+          default:
+            break;
+        }
+      }
+
+
 		});
   }
 
@@ -107,32 +127,47 @@ export class FotosPage {
     switch (this.contador)
     {
       case 0:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.presentToast();
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/11.jpg";
-      this.contador=1;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
       break;
       case 1:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/12.jpg";
-      this.contador=2;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
       break;
       case 2:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/13.jpg";
-      this.contador=3;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
       break;
       case 3:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/14.jpg";
-      this.contador=4;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
       break;
       case 4:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/15.jpg";     
       this.contador=0;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
       break;
 
       default:
@@ -140,37 +175,160 @@ export class FotosPage {
     }
   }
 
+  MostarVacacionesVolver()
+  {
+    switch (this.contador)
+    {
+      case 0:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.presentToast();
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/11.jpg";
+      this.contador=4;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
+      break;
+      case 1:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/12.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
+      break;
+      case 2:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/13.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
+      break;
+      case 3:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/14.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
+      break;
+      case 4:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/15.jpg";     
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
+      break;
+
+      default:
+        break;
+    }
+  }
+
+
   MostarAutos()
   {
     switch (this.contador)
     {
       case 0:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.presentToast();
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/6.jpg";
-      this.contador= 1;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
       break;
       case 1:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/7.jpg";
-      this.contador=2;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
       break;
       case 2:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/8.jpg";
-      this.contador=3;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
       break;
       case 3:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/9.jpg";
-      this.contador=4;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
       break;
       case 4:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/10.jpg";     
       this.contador=0;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
+      break;
+
+      default:
+        break;
+    }
+  }
+
+
+  MostarAutosVolver()
+  {
+    switch (this.contador)
+    {
+      case 0:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.presentToast();
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/6.jpg";
+      this.contador= 4;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
+      break;
+      case 1:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/7.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
+      break;
+      case 2:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/8.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
+      break;
+      case 3:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/9.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
+      break;
+      case 4:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/10.jpg";     
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
       break;
 
       default:
@@ -183,36 +341,106 @@ export class FotosPage {
     switch (this.contador)
     {
       case 0:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.presentToast();
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/1.jpg";
-      this.contador=1;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
     
       break;
       case 1:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/2.jpg";
-      this.contador=2;
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
       
       break;
       case 2:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/3.jpg";
-      this.contador=3;
-     
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
       break;
       case 3:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.myPhotoURL = "assets/4.jpg";
-      this.contador=4;
-  
+      this.contador+=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
       break;
       case 4:
-      this.nativeAudio.play('uniqueId1');
+      this.nativeAudio.play('assets/sonido.mp3');
       this.vibration.vibrate([1000]);
       this.myPhotoURL = "assets/5.jpg";     
       this.contador=0;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
+      break;
+
+      default:
+        break;
+    }
+  }
+
+  MostarMascotasVolver()
+  {
+    switch (this.contador)
+    {
+      case 0:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.presentToast();
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/1.jpg";
+      this.contador=4;
+      if (this.contador<0) {
+        this.contador = 0;
+      }
+    
+      break;
+      case 1:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/2.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 1;
+      }
+      
+      break;
+      case 2:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/3.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 2;
+      }
+     
+      break;
+      case 3:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.myPhotoURL = "assets/4.jpg";
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 3;
+      }
+  
+      break;
+      case 4:
+      this.nativeAudio.play('assets/sonido.mp3');
+      this.vibration.vibrate([1000]);
+      this.myPhotoURL = "assets/5.jpg";     
+      this.contador-=1;
+      if (this.contador<0) {
+        this.contador = 4;
+      }
      
       break;
 
@@ -228,7 +456,7 @@ export class FotosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FotosPage');
-   this.nativeAudio.preloadComplex('uniqueId1', 'assets/sonido.mp3', 6, 6, 0).then(()=>{});
+   this.nativeAudio.preloadComplex('assets/sonido.mp3', 'assets/sonido.mp3', 6, 6, 0).then(()=>{});
   }
 
 }
